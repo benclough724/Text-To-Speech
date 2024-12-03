@@ -23,7 +23,7 @@ export default function Home() {
             />
             <button type="submit">Submit</button>
           </form>
-          <textarea>This is a text area 2</textarea>
+          <button>this is a test for github</button>
         </div>
       </main>
     </div>
