@@ -23,7 +23,6 @@ export default function Home() {
             />
             <button type="submit">Submit</button>
           </form>
-          <button>this is a test for github</button>
         </div>
       </main>
     </div>
