@@ -8,7 +8,7 @@ client = OpenAI()
 speech_file_path = Path(__file__).parent / "speech.mp3"
 response = client.audio.speech.create(
   model="tts-1",
-  voice="alloy",
+  voice="Onyx",
   input="I am sat doing some coding. My pc is attached to my monitor which is attached to the wall."
 )
 
