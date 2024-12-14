@@ -5,6 +5,8 @@ from pathlib import Path
 from openai import OpenAI
 client = OpenAI()
 
+print(os.eviron)
+
 speech_file_path = Path(__file__).parent / "speech.mp3"
 response = client.audio.speech.create(
   model="tts-1",
