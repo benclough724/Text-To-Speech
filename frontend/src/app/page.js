@@ -1,13 +1,23 @@
 "use client";
-
 import React, { useState } from "react";
+import api from "./api";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault(); // prevent default page behaviour
-    alert(`Form submitted with value: ${inputValue}`);
+  const handleSubmit = async () => {
+    try {
+      const response = await api.post(
+        "/audio",
+        { inputValue },
+        { responseType: "blob" }
+      );
+
+      const url = URL.createObjectURL(new Blob([response.data]));
+      setAudioUrl(url);
+    } catch (error) {
+      console.error("audio error", error);
+    }
   };
 
   return (
