@@ -28,20 +28,28 @@ app.add_middleware(
 )
 
 @app.post("/audio/")
-async def generate_audio(TTSInput):
-    try:
+async def generate_audio(data: TTSInput):
+    #try:
         
-        speech_file_path = Path(__file__).parent / "speech.mp3"
+        #speech_file_path = Path(__file__).parent / "speech.mp3"
         response = client.audio.speech.create(
             model="tts-1",
             voice="alloy",
-            input=TTSInput
+            text=TTSInput
         )
-        return {"This worked"}
-    #response.stream_to_file(speech_file_path)
+        
+        #response.stream_to_file(speech_file_path)
+        
+        # Save audio file
+        audio_path = "output.mp3"
+        with open(audio_path, "wb") as f:
+            f.write(response['audio_content'])
+        
+        # Return the audio file
+        return FileResponse(audio_path, media_type="audio/mpeg", filename="output.mp3")
     
-    except Exception as e:
-        return JSONResponse(content={"error": str(e)}, status_code=500)
+    # except Exception as e:
+    #     return JSONResponse(content={"error": str(e)}, status_code=500)
     
     
     

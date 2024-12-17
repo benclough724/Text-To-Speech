@@ -4,11 +4,13 @@ import api from "./api";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
+  const [audioUrl, setAudioUrl] = useState(null);
 
   const handleSubmit = async () => {
     try {
-      const response = await api.post(
-        "/audio",
+      console.log(inputValue);
+      const response = await axios.post(
+        "https://localhost:8000/audio/",
         { inputValue },
         { responseType: "blob" }
       );
@@ -41,6 +43,12 @@ export default function Home() {
               Submit
             </button>
           </form>
+          {audioUrl && (
+            <audio controls>
+              <source src={audioUrl} type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+          )}
         </div>
       </main>
     </div>
