@@ -34,7 +34,7 @@ async def generate_audio(data: TTSInput):
         
         print(type(data.text))
         print("1")
-       # speech_file_path = Path(__file__).parent / "speech.mp3"
+        speech_file_path = Path(__file__).parent / "speech.mp3"
         print("2")
         response = client.audio.speech.create(
             model="tts-1",
@@ -42,13 +42,15 @@ async def generate_audio(data: TTSInput):
             input=data.text
         )
         print("3")
-        #return response.stream_to_file("Output.mp3")
+        audio_path = response.stream_to_file("Output.mp3")
         
         #Save audio file
-        audio_path = "output.mp3"
-        with open(audio_path, "wb") as f:
-            f.write(response['audio_content'])
-        
+        # audio_path = "output.mp3"
+        # print("4")
+        # with open(audio_path, "wb") as f:
+        #     print("5")
+        #     f.write(response['audio'])
+        # print("6")
         # Return the audio file
         return FileResponse(audio_path, media_type="audio/mpeg", filename="output.mp3")
     

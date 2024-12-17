@@ -24,7 +24,7 @@ const Home = () => {
         { text: inputValue },
         { responseType: "blob" }
       );
-
+      
       const url = URL.createObjectURL(new Blob([response.data]));
       setAudioUrl(url);
     } catch (error) {
