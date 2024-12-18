@@ -1,11 +1,12 @@
 import uvicorn
 from fastapi import FastAPI
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List 
 from pathlib import Path
 from openai import OpenAI
+import base64
 
 app = FastAPI()
 client = OpenAI()
@@ -42,17 +43,20 @@ async def generate_audio(data: TTSInput):
             input=data.text
         )
         print("3")
-        audio_path = response.stream_to_file("Output.mp3")
+         
         
-        #Save audio file
-        # audio_path = "output.mp3"
-        # print("4")
-        # with open(audio_path, "wb") as f:
-        #     print("5")
-        #     f.write(response['audio'])
-        # print("6")
-        # Return the audio file
-        return FileResponse(audio_path, media_type="audio/mpeg", filename="output.mp3")
+       #Save audio file
+        #audio_path = "output.mp3"
+       # print("4")
+        #wav_bytes = base64.b64decode(response.input.audio.data)
+        #print("5")
+        #with open(speech_file_path, "wb") as f:
+            #f.write(wav_bytes)
+        response.stream_to_file(speech_file_path)
+            
+        print("6")
+       #Return the audio file
+        return FileResponse(speech_file_path, media_type="audio/mpeg", filename="speech.mp3")
     
     except Exception as e:
         #return JSONResponse("2")
