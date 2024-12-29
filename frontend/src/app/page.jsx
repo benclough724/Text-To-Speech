@@ -16,7 +16,7 @@ const Home = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //console.log(inputValue);
+    setAudioUrl("")
     try {
       console.log(inputValue);
       const response = await api.post(
@@ -27,6 +27,7 @@ const Home = () => {
       
       const url = URL.createObjectURL(new Blob([response.data]));
       setAudioUrl(url);
+      
     } catch (error) {
       console.error("audio error", error);
     }
