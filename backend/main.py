@@ -29,6 +29,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+# Post to get the openai info
 @app.post("/audio/")
 async def generate_audio(data: TTSInput):
     try:
@@ -39,19 +41,13 @@ async def generate_audio(data: TTSInput):
         print("2")
         response = client.audio.speech.create(
             model="tts-1",
-            voice="alloy",
+            voice="fable",
             input=data.text
         )
         print("3")
          
         
        #Save audio file
-        #audio_path = "output.mp3"
-       # print("4")
-        #wav_bytes = base64.b64decode(response.input.audio.data)
-        #print("5")
-        #with open(speech_file_path, "wb") as f:
-            #f.write(wav_bytes)
         response.stream_to_file(speech_file_path)
             
         print("6")
