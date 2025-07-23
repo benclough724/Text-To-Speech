@@ -1,15 +1,19 @@
 "use client";
 import React, { useState } from "react";
-// import axios from 'axios';
-// import api from "./api";
+import api from "./api";
+import type { 
+  FormSubmitHandler, 
+  TextChangeHandler, 
+  AudioGenerationRequest 
+} from "../types";
 
 const Home = () => {
-  const [inputValue, setInputValue] = useState(""); // Includes the state for the user inputted value
-  const [audioUrl, setAudioUrl] = useState(null); // State for the audio data and setting the audio URL
+  const [inputValue, setInputValue] = useState<string>(""); // Includes the state for the user inputted value
+  const [audioUrl, setAudioUrl] = useState<string | null>(null); // State for the audio data and setting the audio URL
 
   
   // Handles changes of the text area and updates it based on user inputted data
-  const handleInputChange = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(event.target.value);
     
   }
@@ -17,12 +21,13 @@ const Home = () => {
   
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setAudioUrl("")
+    setAudioUrl("");
     try {
       console.log(inputValue);
+      const requestData: AudioGenerationRequest = { text: inputValue };
       const response = await api.post(
         "/audio/",
-        { text: inputValue },
+        requestData,
         { responseType: "blob" }
       );
       
@@ -39,9 +44,8 @@ const Home = () => {
       <h1>Hello</h1>
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div className="w-full flex flex-col md:flex-row justify-between items-center md:space-x-4 space-y-4 md:space-y-0">
-          <form>
+          <form onSubmit={handleSubmit}>
           <textarea
-            type="text"
             value={inputValue}
             onChange={handleInputChange}
             placeholder="Enter your text"
@@ -49,7 +53,6 @@ const Home = () => {
           />
           <button
             type="submit"
-            onClick={handleSubmit}
             className="p-2 bg-blue-500 text-black rounded-lg hover:bg-blue-600 transition">
             Submit
           </button>
