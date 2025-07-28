@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import api from "./api";
+import api from "./api/api";
+
+// Importing types for better type safety
 import type { 
   FormSubmitHandler, 
   TextChangeHandler, 
@@ -15,7 +17,6 @@ const Home = () => {
   // Handles changes of the text area and updates it based on user inputted data
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(event.target.value);
-    
   }
 
   
